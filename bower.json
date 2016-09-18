@@ -1,0 +1,27 @@
+{
+    "name": "learn-fed",
+    "description": "Building the curriculum: Learn Frontend Development (FED)",
+    "authors": [
+    "Sensaetions"
+  ],
+    "private": true,
+    "ignore": [
+    "**/.*",
+    "test",
+    "tests"
+  ],
+    "dependencies": {
+        "html5shiv": "^3.7.3",
+        "jquery": "~1.11.x",
+        "jquery-infield-label": "~0.1.x",
+        "infieldLabel": "^1.0.2",
+        "matchHeight": "matchheight#^0.7.0",
+        "modernizr": "~2.8.2",
+        "picturefill": "3.0.x"
+    },
+    "devDependencies": {
+        "breakpoint-sass": "^2.6.1",
+        "normalize-css": "^4.1.1",
+        "susy": "^2.2.12"
+    }
+}
