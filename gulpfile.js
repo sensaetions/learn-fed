@@ -30,24 +30,22 @@ var config = {
         markup: [
             '*.php',
             '**/*.php',
-            'assets/**/*.php'
         ],
-        sass: 'assets/sass/**/*.scss',
+        sass: 'sass/**/*.scss',
         scripts: [
             'bower_components/jquery/dist/jquery.js',
-            //'bower_components/infieldLabel/jquery.infieldLabel.js',
             'bower_components/matchHeight/dist/jquery.matchHeight.js',
-            'assets/scripts/rainbow.offcanvas.1.4.3.min.js',
-            'assets/scripts/jquery.infieldlabel.min.js',
-            'assets/scripts/smooth-scroll.js',
-            'assets/scripts/functions.js'
+            'scripts/rainbow.offcanvas.1.4.3.min.js',
+            'scripts/jquery.infieldlabel.min.js',
+            'scripts/smooth-scroll.js',
+            'scripts/functions.js'
         ],
-        svg: 'assets/images/svg/*.svg'
+        svg: 'images/svg/*.svg'
     },
     output: {
-        images: 'assets/images',
-        scripts: 'assets/scripts',
-        styles: 'assets/styles'
+        images: 'dist/images',
+        scripts: 'dist/scripts',
+        styles: 'dist/styles'
     }
 }
 
