@@ -6,16 +6,19 @@ var autoprefixer = require('gulp-autoprefixer'),
     browserSync = require('browser-sync'),
     combineMq = require('gulp-combine-mq'),
     concat = require('gulp-concat'),
-    connect = require('gulp-connect'),
     connectPhp = require('gulp-connect-php'),
+    copy = require('gulp-copy'),
+    extChange = require('gulp-extension-change'),
     gulp = require('gulp'),
     gutil = require('gulp-util'),
     imagemin = require('gulp-imagemin'),
     notify = require('gulp-notify'),
     pixrem = require('gulp-pixrem'),
     plumber = require('gulp-plumber'),
+    put = require('gulp-put'),
     reload = browserSync.reload,
     rename = require('gulp-rename'),
+    replace = require('gulp-replace'),
     sass = require('gulp-sass'),
     sassGlob = require('gulp-sass-glob'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -26,26 +29,44 @@ var autoprefixer = require('gulp-autoprefixer'),
 
 var config = {
     input: {
-        images: 'images/*.{png,jpg,jpeg,gif}',
+        all: [
+            'images/*.{png,jpg,jpeg,gif,svg}',
+            'scripts/**/*.js',
+            '**/*.php',
+            '*.php'
+        ],
+        images: 'images/*.{png,jpg,jpeg,gif,svg}',
         markup: [
             '*.php',
             '**/*.php',
         ],
+        markupRoot: '*.php',
         sass: 'sass/**/*.scss',
         scripts: [
             'bower_components/jquery/dist/jquery.js',
             'bower_components/matchHeight/dist/jquery.matchHeight.js',
-            'scripts/rainbow.offcanvas.1.4.3.min.js',
-            'scripts/jquery.infieldlabel.min.js',
-            'scripts/smooth-scroll.js',
-            'scripts/functions.js'
+            'scripts/concat/rainbow.offcanvas.1.4.3.min.js',
+            'scripts/concat/jquery.infieldlabel.min.js',
+            'scripts/concat/smooth-scroll.js',
+            'scripts/concat/functions.js'
         ],
         svg: 'images/svg/*.svg'
     },
     output: {
-        images: 'dist/images',
-        scripts: 'dist/scripts',
-        styles: 'dist/styles'
+        root: '',
+        images: 'images/',
+        scripts: 'scripts/',
+        styles: 'styles/'
+    },
+    copy: {
+        files: [
+            'styles/*.css',
+            'images/*.{png,jpg,jpeg,gif,svg}',
+            'scripts/*.js',
+        ],
+        dist: 'dist/'
+
+
     }
 }
 
@@ -54,9 +75,9 @@ var config = {
 var sassOptions = {
     errLogToConsole: true,
     includePaths: [
-        'bower_components/susy/sass',
-        'bower_components/breakpoint-sass/stylesheets',
-        'bower_components/normalize-css/'],
+'bower_components/susy/sass',
+'bower_components/breakpoint-sass/stylesheets',
+'bower_components/normalize-css/'],
     outputStyle: 'expanded',
     //sourceComments: 'false'
 };
@@ -77,6 +98,7 @@ gulp.task('markup', function () {
         .pipe(plumber({
             errorHandler: notify.onError('Error: <%= error.message %>')
         }))
+        //.pipe(gulp.dest(config.output.folder))
         .pipe(reload({
             stream: true
         }));
@@ -104,20 +126,16 @@ gulp.task('images', function (done) {
     return gulp.src(config.input.images)
         .pipe(imagemin())
         .pipe(plumber({
-        errorHandler: notify.onError('Error: <%= error.message %>')
-    }))
+            errorHandler: notify.onError('Error: <%= error.message %>')
+        }))
         .pipe(gulp.dest(config.output.images));
 });
-
 
 gulp.task('svg', function () {
     return gulp.src(config.input.svg)
         .pipe(svgmin())
         .pipe(svgsymbols({
             templates: ['default-svg', 'default-css']
-        }))
-        .pipe(browserSync.reload({
-            stream: true
         }))
         .pipe(plumber({
             errorHandler: notify.onError('Error: <%= error.message %>')
@@ -137,18 +155,35 @@ gulp.task('scripts', function () {
         }))
 });
 
-gulp.task('connect', function () {
-    connect.server({
-        root: '',
-        livereload: true
-    });
+gulp.task('replace', function () {
+    gulp.src(config.input.markupRoot)
+        .pipe(extChange({
+            afterExtension: 'html',
+            copy: true
+        }))
+        .pipe(plumber({
+            errorHandler: notify.onError('Error: <%= error.message %>')
+        }))
+        .pipe(gulp.dest(config.copy.dist))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
 });
+
+gulp.task('copy', function () {
+    gulp.src(config.copy.files)
+        .pipe(plumber({
+            errorHandler: notify.onError('Error: <%= error.message %>')
+        }))
+        .pipe(put(config.copy.dist))
+});
+
 
 gulp.task('connectPhp', function () {
     connectPhp.server({
         hostname: '0.0.0.0',
         port: 8000,
-        base: '',
+        base: 'dist',
     });
 });
 
@@ -174,8 +209,10 @@ gulp.task('watch', function () {
     gulp.watch(config.input.scripts, ['scripts']);
     gulp.watch(config.input.images, ['images']);
     gulp.watch(config.input.svg, ['svg']);
+    gulp.watch(config.input.markupRoot, ['copy', 'replace']);
+    gulp.watch(config.copy.files, ['copy', 'replace']);
 });
 
 // Default task
-gulp.task('dynamic', ['markup', 'styles', 'images', 'svg', 'scripts', 'connectSync', 'watch']);
+gulp.task('dynamic', ['markup', 'styles', 'images', 'svg', 'scripts', 'copy', 'replace', 'connectSync', 'watch']);
 gulp.task('default', ['dynamic']);
