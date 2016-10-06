@@ -1,12 +1,4 @@
-<html>
-
-<head>
-    <title>Learn Front-End Development</title>
-    <link rel="stylesheet" href="dist/styles/styles.css">
-    <link rel="stylesheet" href="node_modules/highlight.js/styles/monokai-sublime.css">
-</head>
-
-<body>
+<?php include_once('includes/globals/header.php'); ?>
     <h1>Hello world!</h1>
     <h2>This is a test</h2>
     <pre><code class="css">
@@ -14,6 +6,7 @@
             property: value;
         }
     </code></pre>
+    <?php include_once('includes/globals/footer.php'); ?>
 </body>
 
 </html>

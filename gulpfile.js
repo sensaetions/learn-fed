@@ -1,5 +1,6 @@
 // fix for autoprefixer
-require('es6-promise').polyfill();
+require('es6-promise')
+    .polyfill();
 
 // Plugins
 var autoprefixer = require('gulp-autoprefixer'),
@@ -45,6 +46,7 @@ var config = {
         scripts: [
             'bower_components/jquery/dist/jquery.js',
             'bower_components/matchHeight/dist/jquery.matchHeight.js',
+            'node_modules/highlight.js/lib/highlight.js',
             'scripts/concat/rainbow.offcanvas.1.4.3.min.js',
             'scripts/concat/jquery.infieldlabel.min.js',
             'scripts/concat/smooth-scroll.js',
@@ -79,7 +81,6 @@ var sassOptions = {
 'bower_components/breakpoint-sass/stylesheets',
 'bower_components/normalize-css/'],
     outputStyle: 'expanded',
-    //sourceComments: 'false'
 };
 var autoprefixerOptions = {
     browsers: ['last 2 versions', '> 1%', 'ie 8', 'ie 9']
@@ -108,7 +109,8 @@ gulp.task('styles', function () {
     return gulp.src(config.input.sass)
         .pipe(sassGlob())
         .pipe(sourcemaps.init(sourceMapOptions))
-        .pipe(sass(sassOptions).on('error', sass.logError))
+        .pipe(sass(sassOptions)
+            .on('error', sass.logError))
         .pipe(combineMq(combineMqOptions))
         .pipe(autoprefixer(autoprefixerOptions))
         .pipe(pixrem())
@@ -197,9 +199,10 @@ gulp.task('connectSync', ['connectPhp'], function () {
         });
     });
 
-    gulp.watch(config.input.markup).on('change', function () {
-        browserSync.reload();
-    });
+    gulp.watch(config.input.markup)
+        .on('change', function () {
+            browserSync.reload();
+        });
 });
 
 // run 'default' task before running watch
