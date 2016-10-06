@@ -2,11 +2,8 @@
     <h1>Hello world!</h1>
     <h2>This is a test</h2>
     <pre><code class="css">
-        .this-is-a-class {
-            property: value;
+        <span class="hljs-keyword">.this-is-a-class</span> {
+            <span class="hljs-attribute">property</span>: value;
         }
     </code></pre>
     <?php include_once('includes/globals/footer.php'); ?>
-</body>
-
-</html>
