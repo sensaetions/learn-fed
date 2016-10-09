@@ -1,2 +1,5 @@
-@import 'vendors/highlight-js';
-@import 'vendors/monokai';
+@import 'utilities/*.scss';
+
+@import 'global/*.scss';
+
+@import 'vendors/*.scss';

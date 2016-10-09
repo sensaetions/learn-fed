@@ -1,4 +1,7 @@
-/*
+body {
+  background-color: red;
+  font-family: 'Helvetica Neue, sans-serif';
+}/*
 
 Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
