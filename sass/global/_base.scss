@@ -1,6 +1,9 @@
 html {}
 
 body {
-    background-color: red;
-    font-family: 'Helvetica Neue, sans-serif';
+    font-family: $font-body-regular;
+}
+
+code {
+    font-family: $font-code;
 }
