@@ -1,0 +1,83 @@
+@mixin clearfix {
+    *zoom: 1;
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin box-sizing($box-model) {
+    box-sizing: $box-model;
+    *behavior: url('../../scripts/boxsizing.htc'); // <= IE8
+}
+
+@mixin border-radius($radius) {
+    border-radius: $radius;
+    background-clip: padding-box;
+}
+
+@mixin box-shadow($horiz, $vert, $blur, $spread, $color) {
+    box-shadow: $horiz $vert $blur $spread $color;
+}
+
+// box shadow with inset, outset
+@mixin double-box-shadow($shadow-1, $shadow-2) {
+    box-shadow: $shadow-1, $shadow-2
+}
+
+@mixin text-shadow($horizOffset, $vertOffset, $blur, $color) {
+    text-shadow: $horizOffset $vertOffset $blur $color;
+}
+
+@mixin stripe-background($color1, $color2, $deg: -45deg, $size1: 1px, $size2: 0, $size3: 10px) {
+    background: repeating-linear-gradient( $deg, $color1, $color1 $size1, $color2 $size2, $color2 $size3);
+}
+
+@mixin transform($transforms) {
+    transform: $transforms;
+}
+
+@mixin transition($args...) {
+    transition: $args;
+}
+
+@mixin wrapper-pseudo ($bgcolor: darken($color-white, 15%), $color: darken($color-white, 50%), $font: $font-body-light-italic) {
+    @at-root #{&}::before {
+        background-color: $bgcolor;
+        color: $color;
+        font-family: $font;
+        display: block;
+        padding: 10px;
+        width: 100%;
+    }
+}
+
+@mixin container {
+    @extend %clearfix;
+    @extend %margin-centered;
+    max-width: $container-small;
+    @include breakpoint($tp-huge) {
+        max-width: $container-large;
+    }
+}
+
+@mixin vertical-padding ($padding-top, $padding-bottom) {
+    padding-bottom: $padding-bottom;
+    padding-top: $padding-top;
+}
+
+@mixin centered-vertically ($position: absolute, $top: 50%, $transformY: -50%) {
+    position: $position;
+    top: $top;
+    transform: translateY($transformY);
+}
+
+@mixin centered-horizontally-vertically ($position: absolute, $left: 50%, $top: 50%, $transformX: -50%, $transformY: -50%) {
+    left: $left;
+    position: $position;
+    top: $top;
+    transform: translate($transformX, $transformY);
+}
