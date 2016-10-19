@@ -8,6 +8,10 @@ body {
     @include wrapper-pseudo;
 }
 
+.container {
+    @include container;
+}
+
 code {
     font-family: $font-code;
 }
