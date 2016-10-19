@@ -5,12 +5,7 @@ body {
 }
 
 .wrapper {
-    @at-root #{&}::before {
-        background-color: darken($color-white, 15%);
-        display: block;
-        padding: 10px;
-        width: 100%;
-    }
+    @include wrapper-pseudo;
 }
 
 code {
