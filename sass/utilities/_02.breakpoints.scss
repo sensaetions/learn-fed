@@ -1,0 +1,52 @@
+/*
+Breakpoint Sass http://breakpoint-sass.com
+assume min-width (by default) if only a number,
+set min-width/max-width if both values are numbers.
+
+if one value is a string, assume a feature/value pair, 
+string tests together within parentheses, assume each item is a feature value pair,
+declare our breakpoints. All min-width for now.
+
+Media Queries
+1. Name and define our breakpoints. Name the map something sensical
+2. Write a comma separated list of key: value, pairs that we will use later
+*/
+
+$small: 480px;
+$small-wide: 640px;
+$medium-tall: 760px;
+$medium-wide: 960px;
+$large: 1100px;
+$tp-xlarge: 1200px;
+$tp-huge: 1300px;
+$tp-ginormous: 1400px;
+$tp-omgwide: 1500px;
+$tp-ridiculously-wide: 1600px;
+
+/*
+repeat list only because Breakpoint Sass can use these variables
+requires a list format
+*/
+
+$breakpoints: (
+    small: 480px,
+    small-wide: 640px,
+    medium-tall: 760px,
+    medium-wide: 960px,
+    large: 1100px,
+    tp-xlarge: 1200px,
+    tp-huge: 1300px,
+    tp-ginormous: 1400px,
+    tp-omgwide: 1500px,
+    tp-ridiculously-wide: 1600px
+);
+
+// Display Breakpoint During Development on Front end
+@each $nameofbreakpoint, $screen-size in $breakpoints {
+	@media screen and (min-width: '#{$screen-size}') {
+		.wrapper::before {
+			content: '@include breakpoint($#{$nameofbreakpoint}) // min-width: #{$screen-size}';
+		}
+	}
+}
+
