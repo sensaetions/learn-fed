@@ -1,9 +1,11 @@
-// Global variables
+// Colors
 $color-black: #000;
 $color-white: #fff;
-
 // Fonts
 $font-size-base: 16px;
 $line-height-base: 1.7; // 24px
-
+// Containers
 $max-width-small: 90%;
+$max-width-large: 1600px;
+$container-small: $max-width-small;
+$container-small: $max-width-large;
