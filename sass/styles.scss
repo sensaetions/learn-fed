@@ -1,5 +1,12 @@
-@import 'utilities/*.scss';
+@charset "utf-8";
 
-@import 'global/*.scss';
+// dependencies
+@import 'breakpoint';
+@import 'susy';
+@import 'normalize';
+    
+@import 'utilities/**/*.scss';
 
-@import 'vendors/*.scss';
+@import 'global/**/*.scss';
+
+@import 'vendors/**/*.scss';
