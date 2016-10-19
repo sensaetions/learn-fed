@@ -1,0 +1,19 @@
+// darkening a color
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
+}
+
+// lightening a color
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+}
+
+// write headings 1-6
+@function headings($from:1, $to:6) {
+    @if $from==$to {
+        @return 'h#{$from}';
+    }
+    @else {
+        @return 'h#{$from},' + headings($from+1, $to);
+    }
+}
